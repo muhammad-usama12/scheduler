@@ -16,9 +16,36 @@ export default function Application(props) {
     appointments: {},
   });
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+
+    function bookInterview(id, interview) {
+      console.log(id, interview);
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      }
+      setState({
+        ...state,
+        appointments
+      });
+      axios.put(`api/appointments/${id}`, appointment).then(result => {
+        console.log('axios.put result:', result);
+        setState({
+          ...state,
+          appointments
+        });
+      })
+    }
+
+
+
+
+
 const interviewers = getInterviewersForDay(state, state.day);
     return (
       <Appointment
@@ -27,6 +54,7 @@ const interviewers = getInterviewersForDay(state, state.day);
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
@@ -67,13 +95,9 @@ const interviewers = getInterviewersForDay(state, state.day);
           src="images/lhl.png"
           alt="Lighthouse Labs"
         />
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
       </section>
       <section className="schedule">
         {schedule}
-        {/* {dailyAppointments.map((appointment) => (
-          <Appointment key={appointment.id} {...appointment} />
-        ))} */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
