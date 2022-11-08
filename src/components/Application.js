@@ -21,7 +21,7 @@ export default function Application(props) {
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={appointment.interview}
+        interview={interview}
       />
     );
   });
@@ -65,9 +65,10 @@ export default function Application(props) {
         {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
       </section>
       <section className="schedule">
-        {dailyAppointments.map((appointment) => (
+        {schedule}
+        {/* {dailyAppointments.map((appointment) => (
           <Appointment key={appointment.id} {...appointment} />
-        ))}
+        ))} */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
