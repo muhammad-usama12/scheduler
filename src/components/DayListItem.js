@@ -4,13 +4,13 @@ import classNames from "classnames";
 import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
-  const formatSpots = () => {
-    if (props.spots > 1) {
-      return `${props.spots} spots remaining`;
-    } else if (props.spots === 1) {
+  const formatSpots = (spots) => {
+    if (spots  === 1) {
       return "1 spot remaining";
-    } else {
+    } if (spots === 0) {
       return "no spots remaining";
+    } else {
+      return `${spots} spots remaining`;
     }
   };
 
@@ -21,9 +21,9 @@ export default function DayListItem(props) {
   });
 
   return (
-    <li className={dayClass} onClick={() => props.setDay(props.name)}>
+    <li data-testid='day' className={dayClass} onClick={() => props.setDay(props.name)}>
       <h2 className="text--regular">{props.name}</h2>
-      <h3 className="text--light">{formatSpots()}</h3>
+      <h3 className="text--light">{formatSpots(props.spots)}</h3>
     </li>
   );
 }
