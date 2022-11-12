@@ -39,10 +39,11 @@ export default function Appointment(props) {
 }
 
 const deleteFn = function () {
+  console.log("we're in here")
   transition(DELETING, true);
   props.deleteInterview(props.id)
   .then(() => { transition(EMPTY) }) 
-  .catch(error => transition(ERROR_SAVE, true));
+  .catch(error => transition(ERROR_DELETE, true));
 }
   return (
     <article className="appointment" data-testid="appointment">
@@ -62,9 +63,10 @@ const deleteFn = function () {
       {mode === SAVING && <Status message="SAVING" />}
 
       {mode === DELETING && <Status message="DELETING"  />}
-      {mode === CONFIRM && <Confirm message={'Are you sure you would like to delete?'} onCancel={back} onConfirm={deleteFn}/>}
-      {mode === ERROR_DELETE && <Error message={"There was an error while deleting"} onClose={back}/>}
-      {mode === ERROR_SAVE && <Error message={"There was an error while saving"} onClose={back} />}
+      {mode === CONFIRM && <Confirm message='Are you sure you would like to delete?' onCancel={back} onConfirm={deleteFn}/>}
+      {console.log(mode)}
+      {mode === ERROR_DELETE && <Error message="There was an error while deleting" onClose={back}/>}
+      {mode === ERROR_SAVE && <Error message="There was an error while saving" onClose={back} />}
 
     </article>
   );
