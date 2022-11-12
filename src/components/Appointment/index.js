@@ -25,26 +25,31 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  const save = function(name, interviewer) {
+  const save = function (name, interviewer) {
     const interview = {
       student: name,
-      interviewer
-    }
+      interviewer,
+    };
 
     transition(SAVING);
 
-    props.bookInterview(props.id, interview)
-      .then(() => { transition(SHOW) })
-      .catch(error => transition(ERROR_SAVE, true));
-}
+    props
+      .bookInterview(props.id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch((error) => transition(ERROR_SAVE, true));
+  };
 
-const deleteFn = function () {
-  console.log("we're in here")
-  transition(DELETING, true);
-  props.deleteInterview(props.id)
-  .then(() => { transition(EMPTY) }) 
-  .catch(error => transition(ERROR_DELETE, true));
-}
+  const deleteFn = function () {
+    transition(DELETING, true);
+    props
+      .deleteInterview(props.id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch((error) => transition(ERROR_DELETE, true));
+  };
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
@@ -58,16 +63,34 @@ const deleteFn = function () {
           onEdit={() => transition(EDIT)}
         />
       )}
-      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save} />}
-      {mode === EDIT && <Form interviewers={props.interviewers} onCancel={back} onSave={save} name={props.interview.student} interviewer={props.interview.interviewer.name} />}
+      {mode === CREATE && (
+        <Form interviewers={props.interviewers} onCancel={back} onSave={save} />
+      )}
+      {mode === EDIT && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={save}
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.name}
+        />
+      )}
       {mode === SAVING && <Status message="SAVING" />}
 
-      {mode === DELETING && <Status message="DELETING"  />}
-      {mode === CONFIRM && <Confirm message='Are you sure you would like to delete?' onCancel={back} onConfirm={deleteFn}/>}
-      {console.log(mode)}
-      {mode === ERROR_DELETE && <Error message="There was an error while deleting" onClose={back}/>}
-      {mode === ERROR_SAVE && <Error message="There was an error while saving" onClose={back} />}
-
+      {mode === DELETING && <Status message="DELETING" />}
+      {mode === CONFIRM && (
+        <Confirm
+          message="Are you sure you would like to delete?"
+          onCancel={back}
+          onConfirm={deleteFn}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error message="There was an error while deleting" onClose={back} />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="There was an error while saving" onClose={back} />
+      )}
     </article>
   );
 }

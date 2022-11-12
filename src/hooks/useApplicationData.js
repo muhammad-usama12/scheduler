@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  //manage state for appointment list, the default is Monday
   const [state, setState] = useState({
     day: "Monday",
     days: [],
