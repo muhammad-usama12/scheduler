@@ -12,6 +12,7 @@ import {
   queryByAltText,
   act,
   getAllByText,
+  prettyDOM,
 } from "@testing-library/react";
 import axios from "axios";
 import Application from "components/Application";
@@ -116,11 +117,11 @@ describe("Application", () => {
       (appointment) => queryByText(appointment, "Archie Cohen")
     );
 
-    fireEvent.click(queryByAltText(appointment, "Save"));
+    fireEvent.click(getByAltText(appointment, "Edit"));
 
-    expect(getByText(appointment, "Cancel")).toBeInTheDocument();
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
-    fireEvent.click(queryByText(appointment, "Confirm"));
+    fireEvent.click(getByText(appointment, "Save"));
 
     await waitForElement(() => getByText(appointment, "Error"));
 
