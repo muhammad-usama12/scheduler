@@ -8,7 +8,7 @@
 
 Scheduler Homepage
 
-!['Responsive Design'](https://github.com/muhammad-usama12/scheduler/blob/master/docs/app-responsive-design.png)
+!['Responsive Design'](https://github.com/muhammad-usama12/scheduler/blob/master/docs/app-responsive-design_.png)
 
 Responsive design, fits all screens
 
