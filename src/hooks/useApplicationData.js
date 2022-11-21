@@ -12,6 +12,23 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
+  useEffect(() => {
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ])
+      .then((all) => {
+        setState(prev => ({
+          ...prev,
+          days: all[0].data,
+          appointments: { ...all[1].data },
+          interviewers: { ...all[2].data },
+        }));
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   function updateSpot(interview) {
     // pick day based on user selection
     const day = state.days.find((indvDay) => indvDay.name === state.day);
@@ -35,16 +52,17 @@ export default function useApplicationData() {
     const appointments = {
       ...state.appointments,
       [id]: appointment,
-    };
+    }
 
-    // assign and call update function to update day result in the server
-    const days = updateSpot(appointment.interview);
+    let days = []
+    if (!state.appointments[id].interview) {
+      days = updateSpot(appointment.interview)
+    } else {
+      days = [...state.days]
+    }
+
     return axios.put(`api/appointments/${id}`, appointment).then((result) => {
-      setState({
-        ...state,
-        days,
-        appointments,
-      });
+      setState(prev => ({...prev, appointments: appointments, days: days}))
     });
   }
 
@@ -62,29 +80,9 @@ export default function useApplicationData() {
     return axios
       .delete(`api/appointments/${id}`, appointment)
       .then((result) => {
-        setState({
-          ...state,
-          days,
-          appointments,
-        });
+        setState(prev => ({...prev, appointments: appointments, days: days}))
       });
   }
-  useEffect(() => {
-    Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers"),
-    ])
-      .then((all) => {
-        setState(prev => ({
-          ...prev,
-          days: all[0].data,
-          appointments: { ...all[1].data },
-          interviewers: { ...all[2].data },
-        }));
-      })
-      .catch((e) => console.log(e));
-  }, []);
 
   return {
     state,
