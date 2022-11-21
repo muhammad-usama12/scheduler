@@ -4,7 +4,7 @@
 
 ## App Screencaps
 
-!["Homepage"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/homepage.png)
+!["Homepage"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/app-homepage.png)
 
 Scheduler Homepage
 
