@@ -12,11 +12,11 @@ Scheduler Homepage
 
 Responsive design, fits all screens
 
-!["Interview Saving"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/interview-saving.png)
+!["Interview Saving"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/app-saving-appointment.png)
 
 Interview saving prompt
 
-!["Interview Delete Message"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/interview-delete-prompt.png)
+!["Interview Delete Message"](https://github.com/muhammad-usama12/scheduler/blob/master/docs/app-delete-prompt.png)
 
 Interview delete confirmation
 
